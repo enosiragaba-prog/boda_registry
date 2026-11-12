@@ -1,0 +1,9 @@
+<%- include('../partials/header', { title }) %>
+<div class="d-flex justify-content-between align-items-center mb-3"><h1 class="h3">Motorcycles</h1><a class="btn btn-primary" href="/motorcycles/new">Register motorcycle</a></div>
+<div class="card"><div class="table-responsive"><table class="table table-hover mb-0">
+<thead><tr><th>Registration</th><th>Make / model</th><th>Colour</th><th>Rider</th><th>Action</th></tr></thead><tbody>
+<% if (!motorcycles.length) { %><tr><td colspan="5" class="text-center text-muted py-4">No motorcycles registered yet.</td></tr><% } %>
+<% motorcycles.forEach(m => { %><tr><td><%= m.registrationNumber %></td><td><%= [m.make,m.model].filter(Boolean).join(' ') || '-' %></td><td><%= m.color || '-' %></td><td><%= m.rider ? m.rider.fullName : '-' %></td>
+<td><form method="POST" action="/motorcycles/<%= m._id %>/delete" onsubmit="return confirm('Delete this motorcycle?')"><button class="btn btn-sm btn-outline-danger">Delete</button></form></td></tr><% }) %>
+</tbody></table></div></div>
+<%- include('../partials/footer') %>

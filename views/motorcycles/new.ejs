@@ -1,0 +1,10 @@
+<%- include('../partials/header', { title }) %>
+<div class="form-card"><h1 class="h3 mb-3">Register a motorcycle</h1>
+<form method="POST" action="/motorcycles">
+  <div class="mb-3"><label class="form-label">Registration number *</label><input class="form-control" name="registrationNumber" placeholder="e.g. UFX 123A" required></div>
+  <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Make</label><input class="form-control" name="make" placeholder="e.g. Bajaj"></div><div class="col-md-6 mb-3"><label class="form-label">Model</label><input class="form-control" name="model"></div></div>
+  <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Colour</label><input class="form-control" name="color"></div><div class="col-md-6 mb-3"><label class="form-label">Year</label><input class="form-control" type="number" name="year" min="1950" max="2100"></div></div>
+  <div class="mb-3"><label class="form-label">Assigned rider</label><select class="form-select" name="rider"><option value="">Not assigned</option><% riders.forEach(r => { %><option value="<%= r._id %>"><%= r.fullName %> — <%= r.phone %></option><% }) %></select></div>
+  <button class="btn btn-primary">Save motorcycle</button> <a class="btn btn-outline-secondary" href="/motorcycles">Cancel</a>
+</form></div>
+<%- include('../partials/footer') %>

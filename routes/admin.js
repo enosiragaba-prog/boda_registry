@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const c = require('../controllers/adminController');
+const { isLoggedIn, isAdmin } = require('../middleware/auth');
+router.use(isLoggedIn, isAdmin);
+router.get('/', c.dashboard);
+router.get('/approvals', c.pending);
+router.post('/approvals/:id', c.review);
+router.get('/riders/new', c.addRiderForm);
+router.post('/riders', c.addRider);
+router.get('/users', c.users);
+module.exports = router;

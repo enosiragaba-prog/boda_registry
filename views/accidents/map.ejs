@@ -1,0 +1,79 @@
+
+<%- include('../partials/header', { title }) %>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<div class="mb-3">
+    <h1 class="h3">Accident map</h1>
+    <p class="text-muted">
+        Markers show recorded accident locations.
+    </p>
+</div>
+
+<div id="accident-map" style="height: 500px; width: 100%;"></div>
+
+<p class="small text-muted mt-2">
+    Map data: <%= mapPoints.length %> accident location(s).
+    This is a point map, not yet a heatmap.
+</p>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    const points = <%- JSON.stringify(mapPoints) %>;
+
+    const map = L.map('accident-map').setView(
+        [0.3476, 32.5825],
+        11
+    );
+
+    // OpenStreetMap standard tile service
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        maxZoom: 19,
+        referrerPolicy: 'strict-origin-when-cross-origin',
+        updateWhenIdle: true,
+        updateWhenZooming: false
+    }).addTo(map);
+
+    points.forEach(point => {
+        L.marker([
+            point.latitude,
+            point.longitude
+        ])
+        .addTo(map)
+        .bindPopup(`
+            <strong>${escapeText(point.locationName)}</strong>
+            <br>
+            Severity: ${escapeText(point.severity)}
+            <br>
+            Date: ${escapeText(point.date)}
+        `);
+    });
+
+    function escapeText(value) {
+        return String(value).replace(/[&<>"']/g, char => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[char]));
+    }
+
+    if (points.length) {
+        const bounds = L.latLngBounds(
+            points.map(point => [
+                point.latitude,
+                point.longitude
+            ])
+        );
+
+        map.fitBounds(bounds, { padding: [30, 30] });
+    }
+</script>
+
+<%- include('../partials/footer') %>

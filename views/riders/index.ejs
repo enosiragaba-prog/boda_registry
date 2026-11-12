@@ -1,0 +1,11 @@
+<%- include('../partials/header', { title }) %>
+<div class="d-flex justify-content-between align-items-center mb-3"><h1 class="h3">Riders</h1><a class="btn btn-primary" href="/riders/new">Register rider</a></div>
+<div class="card"><div class="table-responsive"><table class="table table-hover mb-0">
+<thead><tr><th>Name</th><th>Phone</th><th>Stage</th><th>District</th><th>Status</th><th>Action</th></tr></thead><tbody>
+<% if (!riders.length) { %><tr><td colspan="6" class="text-center text-muted py-4">No riders registered yet.</td></tr><% } %>
+<% riders.forEach(r => { %><tr>
+<td><%= r.fullName %></td><td><%= r.phone %></td><td><%= r.stage || '-' %></td><td><%= r.district || '-' %></td><td><%= r.status %></td>
+<td><form method="POST" action="/riders/<%= r._id %>/delete" onsubmit="return confirm('Delete this rider?')"><button class="btn btn-sm btn-outline-danger">Delete</button></form></td>
+</tr><% }) %>
+</tbody></table></div></div>
+<%- include('../partials/footer') %>

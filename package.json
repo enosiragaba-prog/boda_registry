@@ -1,0 +1,28 @@
+{
+  "name": "boda-registry",
+  "version": "1.0.0",
+  "description": "Boda Boda Rider Registry and Accident Hotspot Mapping System",
+  "main": "server.js",
+  "scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js",
+  "create-admin": "node scripts/createAdmin.js",
+  "initialize-db": "node scripts/initializeDatabase.js",
+  "migrate-existing": "node scripts/migrateExistingRiders.js"
+},
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "connect-mongo": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.7.4",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
