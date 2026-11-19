@@ -38,4 +38,13 @@ app.use('/motorcycles', require('./routes/motorcycles'));
 app.use('/accidents', require('./routes/accidents'));
 app.use((req, res) => res.status(404).render('404', { title: 'Page not found' }));
 app.use((err, req, res, next) => { console.error(err); res.status(500).render('error', { title: 'Something went wrong', message: 'The request could not be completed. Please try again.' }); });
-connectDB().then(() => app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))).catch((e) => { console.error('Could not start application:', e.message); process.exit(1); });
+connectDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Could not start application:', error.message);
+        process.exit(1);
+    });
